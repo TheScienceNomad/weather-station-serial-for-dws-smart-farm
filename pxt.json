@@ -1,5 +1,5 @@
 {
-    "name": "weather station serial for DWS Smart Farm",
+    "name": "weather station serial for DWS Smart Farm 2",
     "description": "",
     "dependencies": {
         "core": "*",
