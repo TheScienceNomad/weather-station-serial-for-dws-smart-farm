@@ -28,10 +28,10 @@ function UpdateHumidity () {
     Humidity = Raw_Data.substr(61, 3)
 }
 function UpdateRainFall () {
-    Rain_Total = parseFloat(Raw_Data.substr(56, 3))
+    Rain_Total = parseFloat(Raw_Data.substr(31, 4))
 }
 function UpdateWindSpeed () {
-    Wind_Speed = parseFloat(Raw_Data.substr(56, 3))
+    Wind_Speed = parseFloat(Raw_Data.substr(16, 4))
 }
 serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () {
     Raw_Data = serial.readUntil(serial.delimiters(Delimiters.CarriageReturn))
