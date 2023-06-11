@@ -10,6 +10,7 @@ function UpdateWeatherData () {
     UpdateHumidity()
     UpdateRainFall()
     UpdateWindSpeed()
+    UpdateSoilMoisture()
 }
 bluetooth.onBluetoothConnected(function () {
     isconnected = 1
@@ -30,6 +31,9 @@ function UpdateHumidity () {
 function UpdateRainFall () {
     Rain_Total = parseFloat(Raw_Data.substr(31, 4))
 }
+function UpdateSoilMoisture () {
+    Soil_Moisture = pins.analogReadPin(AnalogPin.P0)
+}
 function UpdateWindSpeed () {
     Wind_Speed = parseFloat(Raw_Data.substr(16, 4))
 }
@@ -38,6 +42,7 @@ serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () 
     UpdateWeatherData()
 })
 let Wind_Speed = 0
+let Soil_Moisture = 0
 let Rain_Total = 0
 let Humidity = ""
 let Temp = 0
@@ -48,9 +53,19 @@ isconnected = 0
 basic.showIcon(IconNames.SmallHeart)
 basic.pause(2000)
 bluetooth.startUartService()
-loops.everyInterval(2000, function () {
+loops.everyInterval(10000, function () {
     if (isconnected == 1) {
-        bluetooth.uartWriteLine("" + Humidity + "," + Temp + "," + Wind_Direction + "," + Wind_Speed + "," + Rain_Total)
+        bluetooth.uartWriteLine("Humidity=" + Humidity)
+        basic.pause(500)
+        bluetooth.uartWriteLine("Temp=" + Temp)
+        basic.pause(500)
+        bluetooth.uartWriteLine("Wind=" + Wind_Speed)
+        basic.pause(500)
+        bluetooth.uartWriteLine("Rain=" + Rain_Total)
+        basic.pause(500)
+        bluetooth.uartWriteLine("Dir=" + Wind_Direction)
+        basic.pause(500)
+        bluetooth.uartWriteLine("Update=true")
     }
 })
 basic.forever(function () {
